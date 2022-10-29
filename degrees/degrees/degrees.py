@@ -56,7 +56,6 @@ def main():
     if len(sys.argv) > 2:
         sys.exit("Usage: python degrees.py [directory]")
     directory = sys.argv[1] if len(sys.argv) == 2 else "large"
-    print("helloooooo")
     # Load data from files into memory
     print("Loading data...")
     load_data(directory)
