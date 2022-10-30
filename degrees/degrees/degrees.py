@@ -1,4 +1,5 @@
 import csv
+from platform import node
 import sys
 
 from util import Node, StackFrontier, QueueFrontier
@@ -60,7 +61,6 @@ def main():
     print("Loading data...")
     load_data(directory)
     print("Data loaded.")
-
     source = person_id_for_name(input("Name: "))
     if source is None:
         sys.exit("Person not found.")
@@ -69,7 +69,6 @@ def main():
         sys.exit("Person not found.")
 
     path = shortest_path(source, target)
-
     if path is None:
         print("Not connected.")
     else:
@@ -90,9 +89,54 @@ def shortest_path(source, target):
 
     If no possible path, returns None.
     """
+    num_explored = 0
+    start = Node(state=source,parent=None, action=None)
+    frontier = QueueFrontier()
+    frontier.add(start)
+    explored = set()
+
+    while True:
+        if frontier.empty():
+            raise Exception("no solution")
+        node = frontier.remove()
+        num_explored += 1
+
+        if node.state == target:
+            # print(node.state)
+            # print(node.parent)
+            actions = []
+            cells = []
+            while node.parent is not None:
+                actions.append(node.action)
+                cells.append(node.state)
+                node = node.parent
+            actions.reverse()
+            cells.reverse()
+            path = []
+            for i in range(len(actions)):
+                #print(actions.reverse()[i])
+                path.append((actions[i], cells[i]))
+            #print("path")
+            #print(path)
+            return path
+        neighbors = []
+        # for item in neighbors_for_person(node.state):
+        #     if item[1] not in neighbors:
+        #         neighbors.append(item[1])
+        # print(neighbors)
+        explored.add(node.state)
+        for action, state in neighbors_for_person(node.state):
+            # print(action)
+            # print(state)
+            if not frontier.contains_state(state) and state not in explored:
+                    #print('hello')
+                    child = Node(state=state, parent=node, action=action)
+                    frontier.add(child)
+                    #print(frontier)
 
     # TODO
-    raise NotImplementedError
+    
+    #raise NotImplementedError
 
 
 def person_id_for_name(name):
