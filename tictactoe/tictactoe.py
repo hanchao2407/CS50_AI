@@ -2,6 +2,7 @@
 Tic Tac Toe Player
 """
 
+from audioop import ulaw2lin
 from copy import deepcopy
 import math
 
@@ -123,4 +124,29 @@ def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
-    raise NotImplementedError
+    """
+    if terminal(board):
+        return utility(board)
+
+    # determin if player is max or min
+    if player(board) == "X":
+        # max player
+        # picks action a in actions(s) that produces hightest value of Min-Value(Result(s,a))           
+        v = float(‘inf’)
+        for action in actions(board):
+            v = max(v, minmax(result(board, action)))
+        return v
+    else:
+        # min player
+        # picks action a in actions(s) that produces hightest value of Max-Value(Result(s,a))
+    for action in actions(board):
+        if terminal(board) == True:
+            return utility(board)
+        else:
+            minimax(result(action))
+
+    # return Utility(state)
+    # v = float(‘-inf’) 
+    """
+    return list(actions(board))[0]
+    # raise NotImplementedError
