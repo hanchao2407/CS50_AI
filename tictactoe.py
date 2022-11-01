@@ -139,6 +139,7 @@ def max_value(board):
     """
     Returns the optimal action for the current player on the board.
     """
+
     if terminal(board):
         return utility(board), None
     v = float('-inf')
@@ -155,6 +156,8 @@ def min_value(board):
     """
     Returns the optimal action for the current player on the board.
     """
+
+
     if terminal(board):
         return utility(board), None
     v = float('inf')
