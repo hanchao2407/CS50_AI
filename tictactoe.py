@@ -10,7 +10,6 @@ import math
 X = "X"
 O = "O"
 EMPTY = None
-counter = 0
 
 def initial_state():
     """
@@ -48,7 +47,7 @@ def actions(board):
     for i in range(len(board)):
         for j in range(len(board[i])):
             if board[i][j] == EMPTY:
-                pos_actions.add((i,j))
+                pos_actions.add((i, j))
     return pos_actions
     # raise NotImplementedError
 
@@ -126,7 +125,7 @@ def minimax(board):
     Returns the optimal action for the current player on the board.
     """
     if terminal(board):
-            return None
+        return None
     # determin if player is max or min
     if player(board) == "X":
         v, best = max_value(board)
@@ -141,7 +140,7 @@ def max_value(board):
     Returns the optimal action for the current player on the board.
     """
     if terminal(board):
-            return utility(board), None
+        return utility(board), None
     v = float('-inf')
     best = None
     for action in actions(board):
@@ -157,7 +156,7 @@ def min_value(board):
     Returns the optimal action for the current player on the board.
     """
     if terminal(board):
-            return utility(board), None
+        return utility(board), None
     v = float('inf')
     best = None
 
