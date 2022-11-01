@@ -4,12 +4,13 @@ Tic Tac Toe Player
 
 from audioop import ulaw2lin
 from copy import deepcopy
+from itertools import count
 import math
 
 X = "X"
 O = "O"
 EMPTY = None
-
+counter = 0
 
 def initial_state():
     """
@@ -124,29 +125,45 @@ def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
-    """
     if terminal(board):
-        return utility(board)
-
+            return None
     # determin if player is max or min
     if player(board) == "X":
-        # max player
-        # picks action a in actions(s) that produces hightest value of Min-Value(Result(s,a))           
-        v = float(‘inf’)
-        for action in actions(board):
-            v = max(v, minmax(result(board, action)))
-        return v
+        v, best = max_value(board)
+        return best
     else:
-        # min player
-        # picks action a in actions(s) that produces hightest value of Max-Value(Result(s,a))
-    for action in actions(board):
-        if terminal(board) == True:
-            return utility(board)
-        else:
-            minimax(result(action))
+        v, best = min_value(board)
+        return best
+    
 
-    # return Utility(state)
-    # v = float(‘-inf’) 
+def max_value(board):
     """
-    return list(actions(board))[0]
-    # raise NotImplementedError
+    Returns the optimal action for the current player on the board.
+    """
+    if terminal(board):
+            return utility(board), None
+    v = float('-inf')
+    best = None
+    for action in actions(board):
+        v_new, ac = min_value(result(board, action))
+        if v_new > v:
+            best = action
+            v = v_new
+    return v, best
+
+
+def min_value(board):
+    """
+    Returns the optimal action for the current player on the board.
+    """
+    if terminal(board):
+            return utility(board), None
+    v = float('inf')
+    best = None
+
+    for action in actions(board):
+        v_new, ac = max_value(result(board, action))
+        if v_new < v:
+            best = action
+            v = v_new
+    return v, best
