@@ -12,21 +12,46 @@ CKnave = Symbol("C is a Knave")
 # Puzzle 0
 # A says "I am both a knight and a knave."
 knowledge0 = And(
-    # TODO
+    # A is a knight or a knave but not both:
+    And(Or(AKnave,AKnight), Not(And(AKnight,AKnave))),
+    # If A is a knight his sentence is true:
+    Implication(AKnight, And(AKnave,AKnight)),
+    # If A is a knave his sentence is false:
+    Implication(AKnave, Not(And(AKnave,AKnight)))
 )
 
 # Puzzle 1
 # A says "We are both knaves."
 # B says nothing.
 knowledge1 = And(
-    # TODO
+    # A is a knight or a knave but not both:
+    And(Or(AKnight, AKnave), Not(And(AKnight, AKnave))),
+    # B is a knight or a knave but not both:
+    And(Or(BKnight, BKnave), Not(And(BKnight, BKnave))),
+    # If A is a knight his sentence is true:
+    Implication(AKnight, And(AKnave, BKnave)),
+    # If A is a knave his sentence ist false:
+    Implication(AKnave, Not(And(AKnave,BKnave)))
 )
 
 # Puzzle 2
 # A says "We are the same kind."
 # B says "We are of different kinds."
 knowledge2 = And(
-    # TODO
+    # A is a knight or a knave but not both:
+    And(Or(AKnight, AKnave), Not(And(AKnight, AKnave))),
+    # B is a knight or a knave but not both:
+    And(Or(BKnight, BKnave), Not(And(BKnight, BKnave))),
+
+    # If A is a knight, his sentecen is true:
+    Implication(AKnight, Or(And(AKnight,BKnight),And(AKnave,BKnave))),
+    # If A is a knave, his sentecen is ffalse:
+    Implication(AKnave, Not(Or(And(AKnight,BKnight),And(AKnave,BKnave)))),
+    
+    # If B is a knight, his sentecen is true:
+    Implication(BKnight, Or(And(AKnight,BKnave),And(AKnave,BKnight))),
+    # If B is a knight, his sentecen is false:
+    Implication(BKnave, Not(Or(And(AKnight,BKnave),And(AKnave,BKnight))))
 )
 
 # Puzzle 3
@@ -35,7 +60,33 @@ knowledge2 = And(
 # B says "C is a knave."
 # C says "A is a knight."
 knowledge3 = And(
-    # TODO
+    # A is a knight or a knave but not both:
+    And(Or(AKnight, AKnave), Not(And(AKnight, AKnave))),
+    # B is a knight or a knave but not both:
+    And(Or(BKnight, BKnave), Not(And(BKnight, BKnave))),
+    # C is a knight or a knave but not both:
+    And(Or(CKnight, CKnave), Not(And(CKnight, CKnave))),
+
+    # If A is a knight, his sentecen is true:
+    Implication(AKnight, Or(AKnight, AKnave)),
+    # If A is a knave, his sentecen is ffalse:
+    Implication(AKnave, Not(Or(AKnight, AKnave))),
+
+    # If B is a knight, his sentecen is true :
+    Implication(BKnight, CKnave),
+    # If B is a knave, his sentecen is ffalse:
+    Implication(BKnave, CKnight),
+
+    #B says: A said 'I am a knave
+    # If B is a knight, his sentecen is true:
+    Implication(BKnight, AKnave),
+    # If B is a knave, his sentecen is ffalse:
+    Implication(BKnave, AKnight),
+
+    # If C is a knight, his sentecen is true:
+    Implication(CKnight, AKnight),
+    # If C is a knave, his sentecen is ffalse:
+    Implication(CKnave, AKnave)
 )
 
 
