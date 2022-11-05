@@ -10,7 +10,6 @@ import math
 X = "X"
 O = "O"
 EMPTY = None
-counter = 0
 
 def initial_state():
     """
@@ -135,6 +134,7 @@ def minimax(board):
         v, best = min_value(board)
         return best
     
+
 
 def max_value(board):
     """
