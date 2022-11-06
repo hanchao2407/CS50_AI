@@ -105,27 +105,50 @@ class Sentence():
         """
         Returns the set of all cells in self.cells known to be mines.
         """
-        raise NotImplementedError
+        # Loop over self.cells and check if cell is in MinesweeperAI.self.mines
+        temp = set()
+        for cell in self.cells:
+        # If yes, add to temp variable
+            # print(cell)
+            # print("x " + str(MinesweeperAI().mines))
+            if cell in MinesweeperAI().mines:
+                temp.add(cell)
+        return temp
+        # raise NotImplementedError
 
     def known_safes(self):
         """
         Returns the set of all cells in self.cells known to be safe.
         """
-        raise NotImplementedError
+        # Loop over self.cells and check if cell is in MinesweeperAI.self.save
+        temp = set()
+        for cell in self.cells:
+        # If yes, add to temp variable
+            if cell in MinesweeperAI().safes:
+                temp.add(cell)
+        return temp
+        # raise NotImplementedError
 
     def mark_mine(self, cell):
         """
         Updates internal knowledge representation given the fact that
         a cell is known to be a mine.
         """
-        raise NotImplementedError
+        if cell in self.cells:
+            self.cells.remove(cell)
+            self.count -= 1 
+
+
+        # raise NotImplementedError
 
     def mark_safe(self, cell):
         """
         Updates internal knowledge representation given the fact that
         a cell is known to be safe.
         """
-        raise NotImplementedError
+        if cell in self.cells:
+            self.cells.remove(cell)
+        # raise NotImplementedError
 
 
 class MinesweeperAI():
@@ -143,7 +166,9 @@ class MinesweeperAI():
         self.moves_made = set()
 
         # Keep track of cells known to be safe or mines
+        # self.mines = {(0,1),(0,2)}
         self.mines = set()
+        # self.safes = {(0,1),(0,2)}
         self.safes = set()
 
         # List of sentences about the game known to be true
